@@ -45,7 +45,7 @@ You can see the python prompt. Then you can get started via following the next t
 import bsf
 ```
 ## Tutorial
-Please refer to [this tutorial](tutorial.ipynb).
+Please refer to [this tutorial](tutorial/tutorial.ipynb).
 
 ## License
 [BSD License](LICENSE.txt).
