@@ -1,5 +1,7 @@
 BSD 3-Clause License
 
+Blazing Signature Filter (BSF)
+
 Copyright (c) 2017, Battelle Memorial Institute
 All rights reserved.
 
