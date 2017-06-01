@@ -48,4 +48,4 @@ import bsf
 Please refer to [this tutorial](tutorial.ipynb).
 
 ## License
-This project is licensed under the terms of the BSD license. Please see [this link](LICENSE).
+This project is licensed under the terms of the BSD license. Please see [this link](LICENSE.txt).
