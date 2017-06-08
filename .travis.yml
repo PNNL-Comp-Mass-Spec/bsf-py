@@ -1,0 +1,2 @@
+install:
+- python setup.py build_ext -DDEBUG -DBSF_AND
