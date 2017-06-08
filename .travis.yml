@@ -21,7 +21,7 @@ before_install:
 
 install:
   - pip install numpy
-  - python setup.py build_ext -DDEBUG -DBSF_AND
+  - python setup.py build_ext -DDEBUG -DBSF_AND -std=c++0x
 
 notifications:
   email: false
