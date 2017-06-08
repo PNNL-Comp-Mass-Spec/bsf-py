@@ -1,4 +1,14 @@
 language: python
+
+python:
+- "3.4"
+
+compiler:
+- g++
+
 install:
 - pip install numpy
 - python setup.py build_ext -DDEBUG -DBSF_AND
+
+notifications:
+  email: false
