@@ -1,2 +1,4 @@
+language: python
 install:
+- pip install numpy
 - python setup.py build_ext -DDEBUG -DBSF_AND
