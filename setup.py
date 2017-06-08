@@ -10,8 +10,8 @@ if sys.platform == 'darwin':
     os.environ["CC"] = "/usr/local/bin/clang-omp++"
     os.environ['CXX'] = "/usr/local/bin/clang-omp++"
 else:
-    os.environ["CC"] = "/usr/bin/g++"
-    os.environ['CXX'] = "/usr/bin/g++"
+    os.environ["CC"] = "g++"
+    os.environ['CXX'] = "g++"
 bsf_mod = Extension('bsf', sources=['bsf_py.cpp', 'bsf-core/BSFCoreDll.cpp'],
                     language="c++",
                     extra_compile_args=['-fopenmp', '-std=c++11', '-mpopcnt', '-g'],
