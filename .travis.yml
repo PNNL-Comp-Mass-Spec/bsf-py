@@ -21,8 +21,7 @@ before_install:
 
 install:
   - pip install numpy
-  - ln /usr/bin/g++ /usr/bin/g++4.9 
-  - g++ -v
+  - ls -al /usr/bin/g++
   - python setup.py build_ext -DDEBUG -DBSF_AND
 
 notifications:
