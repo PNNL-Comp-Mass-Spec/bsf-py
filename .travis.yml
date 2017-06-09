@@ -21,6 +21,7 @@ before_install:
 
 install:
   - pip install numpy
+  - g++ -v
   - CXX=g++-4.9 python setup.py build_ext -DDEBUG -DBSF_AND
 
 notifications:
