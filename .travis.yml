@@ -21,8 +21,8 @@ before_install:
 
 install:
   - pip install numpy
-  - g++ -v
-  - CXX=g++-4.9 python setup.py build_ext -DDEBUG -DBSF_AND
+  - g++-4.9 -v
+  - python setup.py build_ext -DDEBUG -DBSF_AND --compiler=g++-4.9
 
 notifications:
   email: false
