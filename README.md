@@ -1,3 +1,5 @@
+[![Docker Build Status](https://img.shields.io/docker/build/coldfire79/bsf-py.svg)](https://hub.docker.com/r/coldfire79/bsf-py/)
+
 # bsf-py: Python wrapper for Blazing Signature Filter
 The Blazing Signature Filter (BSF) is a highly efficient pairwise similarity algorithm which enables extensive data mining within a reasonable amount of time.
 

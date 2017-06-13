@@ -8,7 +8,6 @@ if sys.platform == 'darwin':
     vars = sysconfig.get_config_vars()
     vars['LDSHARED'] = vars['LDSHARED'].replace('-bundle', '-dynamiclib')
 
-
 # Please uncomment these two lines if you want to specify the compiler
 # os.environ["CC"] = "/usr/bin/g++"
 # os.environ['CXX'] = "/usr/bin/g++"
