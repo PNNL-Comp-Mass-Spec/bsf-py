@@ -21,9 +21,7 @@ before_install:
 
 install:
   - pip install numpy
-  - sudo ln /usr/bin/g++ /usr/bin/g++-4.9
-  - ls -al /usr/bin/g++
-  - python setup.py build_ext -DDEBUG -DBSF_AND
+  - CC=g++-4.9 CXX=g++-4.9 python setup.py build_ext -DDEBUG -DBSF_AND
 
 notifications:
   email: false
