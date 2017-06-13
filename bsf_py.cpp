@@ -500,6 +500,79 @@ static PyObject* analysis_with_chunk(PyObject *self, PyObject *args)
   return Py_BuildValue("i", 1);
 }
 
+static PyObject* analysis_with_query(PyObject *self, PyObject *args)
+{
+  PyArrayObject *clib, *cquery;
+  
+  char *rfile = "results.txt";
+  char *dir = "";
+  // int chunkSize;
+
+  // npy_intp dimsout[2];
+  npy_intp lib_dims[2];
+  npy_intp q_dims[2];
+
+  /* Parse tuples separately since args will differ between C fcns */
+  if (!PyArg_ParseTuple(args, "O!O!|ss", &PyArray_Type, &clib, &PyArray_Type, &cquery, &rfile, &dir))  return NULL;
+  if (NULL == clib)  return NULL;
+  if (NULL == cquery)  return NULL;
+  /* Check that objects are 'uint64' type and vectors
+       Not needed if python wrapper function checks before call to this routine */
+  if (not_2Duint64(clib)) return NULL;
+  if (not_2Duint64(cquery)) return NULL;
+
+  /* Get the dimensions of the input */
+  int lcol=lib_dims[0]=clib->dimensions[0];
+  int lrow=lib_dims[1]=clib->dimensions[1];
+
+  int qcol=q_dims[0]=cquery->dimensions[0];
+  int qrow=q_dims[1]=cquery->dimensions[1];
+
+  /* different size of vectors */
+  if (lrow != qrow) return NULL;
+  int nrow = lrow;
+
+  printf("filename: %s, chunk size: N/A\n", rfile);
+  printf("dir: %s\n", dir);
+  printf("lcol: %d, lrow: %d\n", lcol, lrow);
+  printf("qcol: %d, qrow: %d\n", qcol, qrow);
+  #ifdef _OPENMP
+  printf("==================OPENMP====================\n");
+  #endif
+
+  uint64_t** lmat = py2D_to_Carrayptrs<uint64_t>(clib);
+  uint64_t** qmat = py2D_to_Carrayptrs<uint64_t>(cquery);
+  printf("Allocate the uint64 matrix...\n");
+
+  // malloc lcol-by-qcol
+  unsigned** rst = new unsigned*[lcol];
+  for (int k = 0; k < lcol; k++) rst[k] = new unsigned[qcol];
+
+  clock_t start = clock(), diff;
+  BSF::BSFCore::analysis_with_query((const uint64_t**)lmat, (const uint64_t**)qmat, rst, 0, lcol, 0, qcol, nrow*64);
+  diff = clock() - start;
+  int msec = diff * 1000 / CLOCKS_PER_SEC;
+  printf("Runtime:\t%d msec\n", msec);
+  
+  BSFResult bsf_rst = check_results<unsigned>((const unsigned**)rst, lcol, qcol);
+
+  bsf_rst.time = time(NULL);
+  bsf_rst.msec = msec;
+  write_results_histogram(bsf_rst, rfile, dir, 0, 0);
+
+  char buf[1024];
+  sprintf(buf, "%sbin_%s.bin", dir, rfile);
+  write_results_bin<unsigned>(rst, lcol, qcol, buf);
+  printf("============================================\n");
+  
+  for(int k = 0; k < lcol; k++) delete [] rst[k];
+  delete [] rst;
+
+  free_Carrayptrs(lmat);
+  free_Carrayptrs(qmat);
+  return Py_BuildValue("i", 1);
+}
+
 static PyObject* read_bin_file(PyObject *self, PyObject *args)
 {
   PyArrayObject *cout;  // The python objects to be extracted from the args
@@ -532,7 +605,7 @@ static PyObject* read_bin_file(PyObject *self, PyObject *args)
 
 static PyObject* fetch_tuples(PyObject *self, PyObject *args)
 {
-  PyArrayObject *cout;  // The python objects to be extracted from the args
+  // PyArrayObject *cout;  // The python objects to be extracted from the args
   
   char *rfile = "results.txt";
   char *dir = "";
@@ -563,6 +636,7 @@ static PyMethodDef BSFMethods[] = {
   {"test", func, METH_VARARGS, "count a string length."},
   {"analysis", analysis, METH_VARARGS, "count a string length."},
   {"analysis_with_chunk", analysis_with_chunk, METH_VARARGS, "count a string length."},
+  {"analysis_with_query", analysis_with_query, METH_VARARGS, "count a string length."},
   {"read_bin_file", read_bin_file, METH_VARARGS, "count a string length."},
   {"fetch_tuples", fetch_tuples, METH_VARARGS, "count a string length."},
   {NULL, NULL, 0, NULL}
