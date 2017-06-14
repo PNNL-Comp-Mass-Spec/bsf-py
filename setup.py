@@ -21,4 +21,6 @@ bsf_mod = Extension('bsf',
 setup(name='bsf',
       version='1.0',
       description='BSF python wrapper',
+      license='BSD 2',
+      long_description=open('README.md').read(),
       ext_modules=[bsf_mod])

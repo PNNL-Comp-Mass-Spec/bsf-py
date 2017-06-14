@@ -23,5 +23,8 @@ install:
   - pip install numpy
   - CC=g++-4.9 CXX=g++-4.9 python setup.py build_ext -DDEBUG -DBSF_AND install
 
+script:
+  - python tutorial/test_bsf.py
+
 notifications:
   email: false
