@@ -13,7 +13,8 @@ Go to the desired folder and clone it as follows:
 ```bash
 git clone --recursive https://github.com/PNNL-Comp-Mass-Spec/bsf-py
 ```
-The 'bsf-core' is a submodule for this repository so that this command will clone the 'bsf-core' too.
+The 'bsf-core' is a submodule for this repository so that this command will recursively clone the 'bsf-core' too.
+
 3. Install BSF package. You can select either -DBSF_XOR or -DBSF_AND as a build option.
   ```bash
   python setup.py build_ext -DDEBUG -DBSF_AND install
