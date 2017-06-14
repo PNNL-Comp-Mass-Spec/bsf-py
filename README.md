@@ -14,9 +14,17 @@ Go to the desired folder and clone it as follows:
 git clone https://github.com/PNNL-Comp-Mass-Spec/bsf-py
 ```
 3. Install BSF package. You can select either -DBSF_XOR or -DBSF_AND as a build option.
-```bash
-python setup.py build_ext -DDEBUG -DBSF_AND install
-```
+  ```bash
+  python setup.py build_ext -DDEBUG -DBSF_AND install
+  ```
+  * NOTE: This python package contains the C extention module for C++ library of BSF. We employ the OpenMP (Open Multi-Processing) 4.0 specification and C++11 standard for BSF. Therefore, if you don't have any C/C++ compiler which supports these, please install GCC 4.9 or newer. 
+
+  Also, you can explicitly set a valid compiler path or name on the command line as below.
+  ```bash
+  CC=g++-4.9 CXX=g++-4.9 python setup.py build_ext -DDEBUG -DBSF_AND install
+  ```
+  After installing, it will automatically run the [unit test](tutorial/test_bsf.py). 
+
 4. Run the test via jupyter notebook
 ```bash
 jupyter notebook
@@ -52,3 +60,46 @@ Please refer to [this tutorial](tutorial/tutorial.ipynb).
 
 ## License
 [BSD License](LICENSE.txt).
+
+## Install GCC 4.9 or newers
+### MAC
+Unfortunately, for the MAC users, the project to support the OpenMP 4.0 specification in the Clang C language family front-end for the LLVM compiler is still going on. They don't fully support yet. Please refer to this [link](https://clang-omp.github.io/). However, you can install GCC 4.9 with Homebrew. It's tested on Yosemite and macOS Sierra.
+```bash
+brew update
+brew install gcc49
+```
+If you have the following trouble to install GCC 4.9 due to no permission, please try to change the ownership and make a link again as follows. 
+```bash
+sudo chown -R $USER /usr/local/lib /usr/local/include /usr/local/bin /usr/local/Cellar /usr/local/share/
+brew link gcc@4.9
+```
+### Linux/Unix
+Basically, the most latest linux kernels (Debian:jessie, Ubuntu, CentOS, ...) support the GCC 4.9 or later. But if you don't have one, please refer to the below. If you have better ideas, please feel free to share that with us.
+#### Debian:jessie
+```bash
+sudo apt-get update
+sudo apt-get install gcc-4.9 g++-4.9
+```
+#### Ubuntu
+```bash
+sudo add-apt-repository ppa:ubuntu-toolchain-r/test
+sudo apt-get update
+sudo apt-get install gcc-4.9 g++-4.9
+sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.9 60 --slave /usr/bin/g++ g++ /usr/bin/g++-4.9
+```
+#### CentOS
+```bash
+sudo yum install libmpc-devel mpfr-devel gmp-devel
+
+cd ~/Downloads
+curl ftp://ftp.mirrorservice.org/sites/sourceware.org/pub/gcc/releases/gcc-4.9.2/gcc-4.9.2.tar.bz2 -O
+tar xvfj gcc-4.9.2.tar.bz2
+
+cd gcc-4.9.2
+./configure --disable-multilib --enable-languages=c,c++
+make -j 4
+
+make install
+```
+### Windows
+You can install GCC through [cygwin](https://cygwin.com/) now. Please refer to this [link](http://preshing.com/20141108/how-to-install-the-latest-gcc-on-windows/) to install [cygwin](https://cygwin.com/install.html) on windows.
