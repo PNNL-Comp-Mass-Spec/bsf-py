@@ -11,8 +11,9 @@ Please refer to https://conda.io/docs/download.html.
 2. Clone this repository.
 Go to the desired folder and clone it as follows:
 ```bash
-git clone https://github.com/PNNL-Comp-Mass-Spec/bsf-py
+git clone --recursive https://github.com/PNNL-Comp-Mass-Spec/bsf-py
 ```
+The 'bsf-core' is a submodule for this repository so that this command will clone the 'bsf-core' too.
 3. Install BSF package. You can select either -DBSF_XOR or -DBSF_AND as a build option.
   ```bash
   python setup.py build_ext -DDEBUG -DBSF_AND install
@@ -54,6 +55,10 @@ root@3d0db695399b:/tmp/bsfpy# python
 You can see the python prompt. Then you can get started via following the next tutorial example.
 ```python
 import bsf
+```
+Also, you can simply run the unit test to check out the installation.
+```bash
+root@3d0db695399b:/tmp/bsfpy# python tutorial/test_bsf.py
 ```
 ## Tutorial
 Please refer to [this tutorial](tutorial/tutorial.ipynb).
