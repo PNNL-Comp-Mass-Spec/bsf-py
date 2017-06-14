@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/PNNL-Comp-Mass-Spec/bsf-py.svg?branch=master)](https://travis-ci.org/PNNL-Comp-Mass-Spec/bsf-py)
 [![Docker Build Status](https://img.shields.io/docker/build/coldfire79/bsf-py.svg)](https://hub.docker.com/r/coldfire79/bsf-py/)
 
 # bsf-py: Python wrapper for Blazing Signature Filter
