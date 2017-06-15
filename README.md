@@ -7,7 +7,7 @@ The Blazing Signature Filter (BSF) is a highly efficient pairwise similarity alg
 
 ## How to install
 1. Install python. Python3+ and conda recommended. 
-Please refer to https://conda.io/docs/download.html.
+Please refer to https://conda.io/docs/download.html and https://www.continuum.io/downloads.
 2. Clone this repository.
 Go to the desired folder and clone it as follows:
 ```bash
@@ -109,3 +109,27 @@ make install
 ```
 ### Windows
 You can install GCC through [cygwin](https://cygwin.com/) now. Please refer to this [link](http://preshing.com/20141108/how-to-install-the-latest-gcc-on-windows/) to install [cygwin](https://cygwin.com/install.html) on windows.
+
+## Troubleshooting
+### 1. Install BSF but cannot import bsf in python prompt.
+with some error message as follows:
+```bash
+ImportError: /path/to/anaconda3/lib/python3.6/site-packages/bsf.cpython-36m-x86_64-linux-gnu.so: undefined symbol: GOMP_parallel
+```
+That's because you don't have correct gmp or gomp library for supporting OpenMP. In general, you should have these when you install gcc through the stable package installation, such as apt-get, yum, and brew. Otherwise, you need to install these dependencies. In this case, you can just try to install gcc through conda package system. It assumes that you have installed anaconda for your python.
+
+Please refer to the following commands.
+```bash
+# remove the bsf package first.
+pip uninstall bsf
+conda install -y gcc
+```
+And you can see it will install the following new dependent packages. 
+```bash
+    cloog: 0.18.0-0
+    gcc:   4.8.5-7
+    gmp:   6.1.0-0
+    isl:   0.12.2-0
+    mpc:   1.0.3-0
+    mpfr:  3.1.5-0
+```
